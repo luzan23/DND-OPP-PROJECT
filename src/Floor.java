@@ -15,4 +15,9 @@ public class Floor extends Cell
         throw new UnsupportedOperationException("Not implemented yet!");
 
     }
+
+    @Override
+    public String toString() {
+        return "";
+    }
 }

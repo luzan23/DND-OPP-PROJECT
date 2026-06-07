@@ -6,4 +6,5 @@ public abstract  class Cell {
     }
 
     public abstract void accept(CellVisitor v);
+    public abstract String toString();
 }

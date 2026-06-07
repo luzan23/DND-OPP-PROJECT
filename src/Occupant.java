@@ -1,4 +1,5 @@
 public interface Occupant {
     public Position getPosition();
-    public  void setPosition();
+    public  void setPosition(Position p);
+    public void accept(Occupant o);
 }

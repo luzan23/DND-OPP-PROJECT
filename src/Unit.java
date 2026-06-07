@@ -1,9 +1,9 @@
 public abstract class Unit implements Occupant, CellVisitor, OccupantVisitor {
-    public String name;
-    private int healthPool;
-    private int healthAmount;
-    private int attackPoints;
-    private int defencepoints;
+    protected String name;
+    protected int healthPool;
+    protected int healthAmount;
+    protected int attackPoints;
+    protected int defencePoints;
 
     public void attack(Unit defender){
 
@@ -11,9 +11,7 @@ public abstract class Unit implements Occupant, CellVisitor, OccupantVisitor {
     public int defend(){
         throw new UnsupportedOperationException("Not implemented yet!");
     }
-    public void death(){
-
-    }
+    public abstract void death();
 
 
     @Override
@@ -22,7 +20,7 @@ public abstract class Unit implements Occupant, CellVisitor, OccupantVisitor {
     }
 
     @Override
-    public void setPosition() {
+    public void setPosition(Position p) {
 
     }
 
@@ -34,11 +32,19 @@ public abstract class Unit implements Occupant, CellVisitor, OccupantVisitor {
     @Override
     public void visit(Enemy e) {
 
+
     }
 
     @Override
     public void visit(Floor f) {
-
+        Occupant occ = f.getOccupant();
+        if(occ == null){
+            this.setPosition(f.getPosition());
+            f.setOccupant(this);
+        }
+        else {
+            occ.accept(this);
+        }
     }
 
     @Override
