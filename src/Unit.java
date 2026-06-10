@@ -5,6 +5,8 @@ public abstract class Unit implements Occupant, CellVisitor, OccupantVisitor {
     protected int attackPoints;
     protected int defencePoints;
 
+    public abstract void accept(OccupantVisitor v);
+
     public void attack(Unit defender){
 
     }

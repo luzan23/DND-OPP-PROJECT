@@ -2,13 +2,22 @@ public abstract class Player extends Unit {
     protected int experience;
     protected int level;
 
-    public abstract void visit();
     public abstract void onTick();
-    public abstract void addExperience();
-    public abstract void visit(Player p);
-    public abstract void visit(Enemy e);
+
+    @Override
+    public void accept(OccupantVisitor v) {
+        v.visit(this);
+    }
+    public void visit(Player p){
+        //remains empty
+    }
+    public void visit(Enemy e){
+        this.attack(e);
+    }
 
     public void addExperience(int amount){
-        throw new UnsupportedOperationException("not implemented");
+        this.experience+=amount;
     }
+
+    protected abstract void levelUp();
 }

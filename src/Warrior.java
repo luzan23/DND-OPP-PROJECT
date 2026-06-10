@@ -3,9 +3,9 @@ public class Warrior extends Player implements HeroicUnit{
     private int abilityCoolDown;
     private int remainingCoolDown;
 
-    @Override
-    public void visit() {
-
+    public Warrior(int abilityCoolDown){
+        this.abilityCoolDown=abilityCoolDown;
+        this.remainingCoolDown=0;
     }
 
     @Override
@@ -14,17 +14,7 @@ public class Warrior extends Player implements HeroicUnit{
     }
 
     @Override
-    public void addExperience() {
-
-    }
-
-    @Override
-    public void visit(Player p) {
-
-    }
-
-    @Override
-    public void visit(Enemy e) {
+    protected void levelUp() {
 
     }
 
@@ -35,6 +25,11 @@ public class Warrior extends Player implements HeroicUnit{
 
     @Override
     public void castAbility() {
+
+    }
+
+    @Override
+    public void death() {
 
     }
 }

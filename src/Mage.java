@@ -7,28 +7,20 @@ public class Mage extends Player implements HeroicUnit{
     private int hitsCount;
     private int abilityRange;
 
-    @Override
-    public void visit() {
-
+    public Mage(int manaPool, int manaCost, int spellPower, int abilityRange){
+        this.manaPool=manaPool;
+        this.currentMana=manaPool/4;
+        this.manaCost= manaCost;
+        this.spellPower=spellPower;
+        this.abilityRange=abilityRange;
     }
-
     @Override
     public void onTick() {
 
     }
 
     @Override
-    public void addExperience() {
-
-    }
-
-    @Override
-    public void visit(Player p) {
-
-    }
-
-    @Override
-    public void visit(Enemy e) {
+    protected void levelUp() {
 
     }
 
@@ -43,6 +35,11 @@ public class Mage extends Player implements HeroicUnit{
 
     @Override
     public void castAbility() {
+
+    }
+
+    @Override
+    public void death() {
 
     }
 }

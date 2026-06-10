@@ -4,13 +4,13 @@ public class Hunter extends Player implements HeroicUnit{
     private int arrowsCount;
     private int ticksCount;
 
-    @Override
-    public void castAbility() {
+    public Hunter(int range){
+        this.range=range;
+        this.ticksCount=0;
 
     }
-
     @Override
-    public void visit() {
+    public void castAbility() {
 
     }
 
@@ -20,22 +20,20 @@ public class Hunter extends Player implements HeroicUnit{
     }
 
     @Override
-    public void addExperience() {
-
+    protected void levelUp() {
+        this.arrowsCount += (10*this.level);
+        this.attackPoints+=(2*this.level);
+        this.defencePoints+=this.level;
     }
 
-    @Override
-    public void visit(Player p) {
-
-    }
-
-    @Override
-    public void visit(Enemy e) {
-
-    }
 
     @Override
     public void accept(Occupant o) {
+
+    }
+
+    @Override
+    public void death() {
 
     }
 }
