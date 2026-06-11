@@ -1,5 +1,5 @@
 public interface Occupant {
     public Position getPosition();
     public  void setPosition(Position p);
-    public void accept(Occupant o);
+    public void accept(OccupantVisitor o);
 }

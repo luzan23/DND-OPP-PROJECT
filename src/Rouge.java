@@ -9,26 +9,23 @@ public class Rouge extends Player implements HeroicUnit{
     }
     @Override
     public void castAbility() {
-
+        this.currentEnergy-=cost;
+        //deal damage
     }
 
     @Override
     public void onTick() {
-
+        this.currentEnergy=Math.min(this.currentEnergy +10, 100);
     }
 
     @Override
     protected void levelUp() {
-
+        this.currentEnergy=100;
+        this.attackPoints+=3*this.level;
     }
 
     @Override
     public void death() {
-
-    }
-
-    @Override
-    public void accept(Occupant o) {
 
     }
 

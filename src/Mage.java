@@ -16,18 +16,16 @@ public class Mage extends Player implements HeroicUnit{
     }
     @Override
     public void onTick() {
-
+        this.currentMana=Math.min(manaPool, currentMana+this.level);
     }
 
     @Override
     protected void levelUp() {
-
+        this.manaPool+=(10*this.level);
+        this.currentMana=Math.min(currentMana+(manaPool/4), manaPool);
+        this.spellPower+=(10*this.level);
     }
 
-    @Override
-    public void accept(Occupant o) {
-
-    }
 
     public void castSpecialAbility() {
 
@@ -35,7 +33,9 @@ public class Mage extends Player implements HeroicUnit{
 
     @Override
     public void castAbility() {
-
+        this.currentMana-=manaCost;
+        int hits=0;
+        //while(hits<this.hitsCount)
     }
 
     @Override
