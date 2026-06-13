@@ -1,18 +1,28 @@
-public class Floor extends Cell
-{
+public class Floor extends Cell {
     private Occupant occupant;
 
+    public Floor(Position position) {
+        super(position);
+        this.occupant = null;
+    }
+
     public Occupant getOccupant(){
-        throw new UnsupportedOperationException("Not implemented yet!");
+        return occupant;
     }
 
     public void setOccupant(Occupant o){
-        throw new UnsupportedOperationException("Not implemented yet!");
+        this.occupant = o;
     }
 
     @Override
     public void accept(CellVisitor v) {
-        throw new UnsupportedOperationException("Not implemented yet!");
+        v.visit(this);
+    }
 
+    @Override
+    public String toString() {
+        if (occupant != null)
+            return occupant.toString();
+        return ".";
     }
 }

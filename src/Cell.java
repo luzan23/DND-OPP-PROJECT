@@ -1,8 +1,12 @@
-public abstract  class Cell {
+public abstract class Cell {
     protected Position position;
 
+    protected Cell(Position position) {
+        this.position = position;
+    }
+
     public Position getPosition(){
-        throw new UnsupportedOperationException("Not implemented yet!");
+        return position;
     }
 
     public abstract void accept(CellVisitor v);
