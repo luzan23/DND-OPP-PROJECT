@@ -3,13 +3,15 @@ public class GameBoard
     private Cell[][] board;
 
     public Occupant getOccupant(Position p){
-        throw new UnsupportedOperationException("Not implemented yet!");
+        return this.board[p.getX()][p.getY()].getOccupant();
     }
+
     public Cell getCell(Position p){
-        throw new UnsupportedOperationException("Not implemented yet!");
+        return this.board[p.getX()][p.getY()];
     }
+
     public void setOccupant(Position p, Occupant o){
-        throw new UnsupportedOperationException("Not implemented yet!");
+        this.board[p.getX()][p.getY()].setOccupant(o);
     }
 
 }

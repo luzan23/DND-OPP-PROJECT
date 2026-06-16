@@ -5,7 +5,16 @@ public abstract class Unit implements Occupant, CellVisitor, OccupantVisitor {
     protected int attackPoints;
     protected int defencePoints;
 
+    public Unit (String name, int healthPool, int healthAmount, int attackPoints, int defencePoints){
+        this.name = name;
+        this.healthPool=healthPool;
+        this.healthAmount=healthAmount;
+        this.attackPoints=attackPoints;
+        this.defencePoints=defencePoints;
+    }
     public abstract void accept(OccupantVisitor v);
+    public abstract void death(Player p);
+    //the player is who killed the enemy, so it's easier to give it the exp points when the enemy dies
 
     public void attack(Unit defender){
 
@@ -13,7 +22,6 @@ public abstract class Unit implements Occupant, CellVisitor, OccupantVisitor {
     public int defend(){
         throw new UnsupportedOperationException("Not implemented yet!");
     }
-    public abstract void death();
 
 
     @Override

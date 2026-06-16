@@ -2,12 +2,19 @@ public class Floor extends Cell
 {
     private Occupant occupant;
 
+    public Floor(Position p){
+        super(p, '.');
+        this.occupant=null;
+
+    }
+    @Override
     public Occupant getOccupant(){
-        throw new UnsupportedOperationException("Not implemented yet!");
+        return this.occupant;
     }
 
+    @Override
     public void setOccupant(Occupant o){
-        throw new UnsupportedOperationException("Not implemented yet!");
+        this.occupant=o;
     }
 
     @Override
@@ -18,6 +25,9 @@ public class Floor extends Cell
 
     @Override
     public String toString() {
-        return "";
+        if (this.occupant != null) {
+            return this.occupant.toString();
+        }
+        return super.toString();
     }
 }

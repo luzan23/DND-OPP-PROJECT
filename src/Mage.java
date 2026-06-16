@@ -7,7 +7,8 @@ public class Mage extends Player implements HeroicUnit{
     private int hitsCount;
     private int abilityRange;
 
-    public Mage(int manaPool, int manaCost, int spellPower, int abilityRange){
+    public Mage(int manaPool, int manaCost, int spellPower, int abilityRange, String name, int healthPool, int healthAmount, int attackPoints, int defensePoints,int abilityCoolDown){
+        super(name, healthPool, healthAmount, attackPoints, defensePoints);
         this.manaPool=manaPool;
         this.currentMana=manaPool/4;
         this.manaCost= manaCost;
@@ -21,14 +22,10 @@ public class Mage extends Player implements HeroicUnit{
 
     @Override
     protected void levelUp() {
+        super.levelUp();
         this.manaPool+=(10*this.level);
         this.currentMana=Math.min(currentMana+(manaPool/4), manaPool);
         this.spellPower+=(10*this.level);
-    }
-
-
-    public void castSpecialAbility() {
-
     }
 
     @Override
@@ -38,8 +35,9 @@ public class Mage extends Player implements HeroicUnit{
         //while(hits<this.hitsCount)
     }
 
+
     @Override
-    public void death() {
+    public void death(Player p) {
 
     }
 }

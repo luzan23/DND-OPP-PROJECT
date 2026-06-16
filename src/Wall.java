@@ -1,4 +1,9 @@
 public class Wall extends Cell{
+
+    public Wall(Position p, char title) {
+        super(p, title);
+    }
+
     @Override
     public void accept(CellVisitor v) {
         v.visit(this);
@@ -6,7 +11,7 @@ public class Wall extends Cell{
 
     @Override
     public String toString() {
-        return "";
+        return "#";
     }
 
 }

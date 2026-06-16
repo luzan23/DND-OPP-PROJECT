@@ -3,7 +3,8 @@ public class Warrior extends Player implements HeroicUnit{
     private int abilityCoolDown;
     private int remainingCoolDown;
 
-    public Warrior(int abilityCoolDown){
+    public Warrior(String name, int healthPool, int healthAmount, int attackPoints, int defensePoints,int abilityCoolDown){
+        super(name, healthPool, healthAmount, attackPoints, defensePoints);
         this.abilityCoolDown=abilityCoolDown;
         this.remainingCoolDown=0;
     }
@@ -15,6 +16,7 @@ public class Warrior extends Player implements HeroicUnit{
 
     @Override
     protected void levelUp() {
+        super.levelUp();
         this.remainingCoolDown=0;
         this.healthPool+=(5*this.level);
         this.attackPoints+=(2*this.level);
@@ -28,8 +30,9 @@ public class Warrior extends Player implements HeroicUnit{
         //randomly choose one enemy with range <3...
     }
 
+
     @Override
-    public void death() {
+    public void death(Player p) {
 
     }
 }
