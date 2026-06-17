@@ -1,11 +1,12 @@
-public abstract class Unit implements Occupant, CellVisitor, OccupantVisitor {
+public abstract class Unit extends Occupant implements CellVisitor, OccupantVisitor {
     protected String name;
     protected int healthPool;
     protected int healthAmount;
     protected int attackPoints;
     protected int defencePoints;
 
-    public Unit (String name, int healthPool, int healthAmount, int attackPoints, int defencePoints){
+    public Unit (char title, Position pos, String name, int healthPool, int healthAmount, int attackPoints, int defencePoints){
+        super(title, pos);
         this.name = name;
         this.healthPool=healthPool;
         this.healthAmount=healthAmount;
@@ -25,18 +26,8 @@ public abstract class Unit implements Occupant, CellVisitor, OccupantVisitor {
 
 
     @Override
-    public Position getPosition() {
-        return null;
-    }
-
-    @Override
-    public void setPosition(Position p) {
-
-    }
-
-    @Override
     public void visit(Wall w) {
-
+        //remains empty bc noting can happen when visiting a wall
     }
 
     @Override
