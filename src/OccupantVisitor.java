@@ -1,4 +1,4 @@
 public interface OccupantVisitor {
-    public void visit(Player p);
-    public void  visit(Enemy e);
+    void visit(Player p);
+    void visit(Enemy e);
 }

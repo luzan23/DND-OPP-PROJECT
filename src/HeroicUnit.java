@@ -1,4 +1,3 @@
 public interface HeroicUnit {
-
-    public void castAbility();
+    void castAbility();
 }

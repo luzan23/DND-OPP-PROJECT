@@ -1,33 +1,31 @@
-public class Floor extends Cell
-{
+public class Floor extends Cell {
     private Occupant occupant;
 
-    public Floor(Position p){
+    public Floor(Position p) {
         super(p, '.');
-        this.occupant=null;
-
-    }
-    @Override
-    public Occupant getOccupant(){
-        return this.occupant;
+        this.occupant = null;
     }
 
     @Override
-    public void setOccupant(Occupant o){
-        this.occupant=o;
+    public Occupant getOccupant() {
+        return occupant;
+    }
+
+    @Override
+    public void setOccupant(Occupant o) {
+        this.occupant = o;
     }
 
     @Override
     public void accept(CellVisitor v) {
         v.visit(this);
-
     }
 
     @Override
     public String toString() {
-        if (this.occupant != null) {
-            return this.occupant.toString();
+        if (occupant != null) {
+            return occupant.toString();
         }
-        return super.toString();
+        return ".";
     }
 }

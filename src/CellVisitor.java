@@ -1,5 +1,4 @@
 public interface CellVisitor {
-    public  void visit(Wall w);
-    public  void visit(Floor f);
-
+    void visit(Wall w);
+    void visit(Floor f);
 }
