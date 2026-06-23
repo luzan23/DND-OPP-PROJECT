@@ -33,7 +33,6 @@ public abstract class Unit extends Occupant implements CellVisitor, OccupantVisi
     @Override
     public void visit(Enemy e) {
 
-
     }
 
     @Override

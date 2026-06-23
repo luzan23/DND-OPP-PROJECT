@@ -12,8 +12,8 @@ public abstract class Occupant {
     }
     public void setPosition(Position p){
         this.position=p;
-
     }
+
     public String toString(){
         return String.valueOf(this.title);
     }
