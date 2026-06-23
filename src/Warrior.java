@@ -1,39 +1,38 @@
-public class Warrior extends Player {
-    private int cooldownPool;
-    private int cooldownRemaining;
+public class Warrior extends Player implements HeroicUnit{
 
-    public Warrior(String name, int healthPool, int attackPoints, int defencepoints, int cooldownPool) {
-        super(name, healthPool, attackPoints, defencepoints);
-        this.cooldownPool = cooldownPool;
-        this.cooldownRemaining = 0;
-    }
+    private int abilityCoolDown;
+    private int remainingCoolDown;
 
-    @Override
-    public void levelUp() {
-        super.levelUp();
-        this.cooldownRemaining = 0;
-        // TODO: להוסיף את שאר הבונוסים הייחודיים של הלוחם לחיים, התקפה והגנה
-    }
-
-    @Override
-    public void castAbility() {
-        if (cooldownRemaining > 0) {
-            // TODO: לשלוח הודעה שהיכולת בציקלוני עדיין בטעינה
-            return;
-        }
-        cooldownRemaining = cooldownPool;
-        // TODO: לוגיקת הריפוי וההתקפה על אויבים בטווח 3
+    public Warrior(String name, int healthPool, int healthAmount, int attackPoints, int defensePoints,int abilityCoolDown){
+        super(name, healthPool, healthAmount, attackPoints, defensePoints);
+        this.abilityCoolDown=abilityCoolDown;
+        this.remainingCoolDown=0;
     }
 
     @Override
     public void onTick() {
-        if (cooldownRemaining > 0) {
-            cooldownRemaining--;
-        }
+        this.remainingCoolDown-=1;
     }
 
     @Override
-    public void accept(OccupantVisitor v) {
+    protected void levelUp() {
+        super.levelUp();
+        this.remainingCoolDown=0;
+        this.healthPool+=(5*this.level);
+        this.attackPoints+=(2*this.level);
+        this.defencePoints+=this.level;
+    }
+
+    @Override
+    public void castAbility() {
+        this.remainingCoolDown=this.abilityCoolDown;
+        this.healthAmount=Math.min(this.healthAmount+(10*this.defencePoints), this.healthPool);
+        //randomly choose one enemy with range <3...
+    }
+
+
+    @Override
+    public void death(Player p) {
 
     }
 }

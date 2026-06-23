@@ -1,46 +1,43 @@
-public class Mage extends Player {
+public class Mage extends Player implements HeroicUnit{
+
     private int manaPool;
-    private int manaAmount;
+    private int currentMana;
     private int manaCost;
     private int spellPower;
     private int hitsCount;
     private int abilityRange;
 
-    public Mage(String name, int healthPool, int attackPoints, int defencepoints, int manaPool, int manaCost, int spellPower, int abilityRange, int hitsCount) {
-        super(name, healthPool, attackPoints, defencepoints);
-        this.manaPool = manaPool;
-        this.manaAmount = manaPool / 4;
-        this.manaCost = manaCost;
-        this.spellPower = spellPower;
-        this.abilityRange = abilityRange;
-        this.hitsCount = hitsCount;
+    public Mage(int manaPool, int manaCost, int spellPower, int abilityRange, String name, int healthPool, int healthAmount, int attackPoints, int defensePoints,int abilityCoolDown){
+        super(name, healthPool, healthAmount, attackPoints, defensePoints);
+        this.manaPool=manaPool;
+        this.currentMana=manaPool/4;
+        this.manaCost= manaCost;
+        this.spellPower=spellPower;
+        this.abilityRange=abilityRange;
+    }
+    @Override
+    public void onTick() {
+        this.currentMana=Math.min(manaPool, currentMana+this.level);
     }
 
     @Override
-    public void levelUp() {
+    protected void levelUp() {
         super.levelUp();
-        this.manaPool += 25 * level;
-        this.manaAmount = Math.min(manaAmount + manaPool / 4, manaPool);
-        this.spellPower += 10 * level;
+        this.manaPool+=(10*this.level);
+        this.currentMana=Math.min(currentMana+(manaPool/4), manaPool);
+        this.spellPower+=(10*this.level);
     }
 
     @Override
     public void castAbility() {
-        if (manaAmount < manaCost) {
-            // TODO: לשלוח הודעה שאין מספיק מאנה
-            return;
-        }
-        manaAmount -= manaCost;
-        // TODO: לוגיקת פגיעות קסם אקראיות באויבים בטווח
+        this.currentMana-=manaCost;
+        int hits=0;
+        //while(hits<this.hitsCount)
     }
 
-    @Override
-    public void onTick() {
-        manaAmount = Math.min(manaAmount + level, manaPool);
-    }
 
     @Override
-    public void accept(OccupantVisitor v) {
+    public void death(Player p) {
 
     }
 }

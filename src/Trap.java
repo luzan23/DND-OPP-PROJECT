@@ -1,41 +1,29 @@
-public class Trap extends Enemy {
-    private int visibilityTime;
-    private int invisibilityTime;
-    private int ticksCount;
-    private boolean visible;
+public class Trap extends Enemy{
 
-    public Trap(String name, int healthPool, int attackPoints, int defencepoints, int visibilityTime, int invisibilityTime, int experienceValue) {
-        super(name,healthPool, attackPoints,defencepoints);
-        this.visibilityTime = visibilityTime;
-        this.invisibilityTime = invisibilityTime;
-        this.ticksCount = 0;
-        this.visible = true;
-    }
-
-    @Override
-    public void onTick() {
-        ticksCount++;
-        if (visible) {
-            if (ticksCount == visibilityTime) {
-                visible = false;
-                ticksCount = 0;
-            }
-        } else {
-            if (ticksCount == invisibilityTime) {
-                visible = true;
-                ticksCount = 0;
-            }
-        }
-        // TODO: לבדוק אם השחקן עומד באותו מיקום כמו המלכודת (טווח 0), ואם כן - לתקוף אותו
-    }
-
-    @Override
-    public String toString() {
-        return "not yet";
+    protected int visibilityTime;
+    protected int invisibilityTime;
+    protected int ticksCount;
+    protected boolean visible;
+    public Trap(int vTime, int invTime, String name, int healthPool, int healthAmount, int attackPoints, int defencePoints) {
+        super(name, healthPool, healthAmount, attackPoints, defencePoints);
+        this.visibilityTime=vTime;
+        this.invisibilityTime=invTime;
+        this.ticksCount=0;
+        this.visible=true;
     }
 
     @Override
     public void accept(OccupantVisitor v) {
+
+    }
+
+    @Override
+    public void death(Player p) {
+
+    }
+
+    @Override
+    public void onEnemyTurn() {
 
     }
 }

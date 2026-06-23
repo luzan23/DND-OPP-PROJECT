@@ -1,44 +1,43 @@
-public class Hunter extends Player {
+public class Hunter extends Player implements HeroicUnit{
+
     private int range;
     private int arrowsCount;
     private int ticksCount;
 
-    public Hunter(String name, int healthPool, int attackPoints, int defencepoints, int range) {
-        super(name, healthPool, attackPoints, defencepoints);
-        this.range = range;
-        this.arrowsCount = 10 * level;
-        this.ticksCount = 0;
-    }
+    public Hunter(int range, String name, int healthPool, int healthAmount, int attackPoints, int defensePoints,int abilityCoolDown){
+        super(name, healthPool, healthAmount, attackPoints, defensePoints);
+        this.range=range;
+        this.arrowsCount=10*this.level;
+        this.ticksCount=0;
 
-    @Override
-    public void levelUp() {
-        super.levelUp();
-        this.arrowsCount += 10 * level;
-        // TODO: להוסיף את הבונוסים הייחודיים של הצייד להתקפה והגנה
     }
-
     @Override
     public void castAbility() {
-        if (arrowsCount <= 0) {
-            // TODO: לשלוח הודעה שאין מספיק חיצים
-            return;
-        }
-        arrowsCount--;
-        // TODO: לוגיקת יריית חץ על האויב הקרוב ביותר בטווח
+        arrowsCount-=1;
+        //deal damage
     }
 
     @Override
     public void onTick() {
-        if (ticksCount == 10) {
-            arrowsCount += level;
+        if(ticksCount==10) {
+            this.arrowsCount += this.level;
             ticksCount = 0;
-        } else {
-            ticksCount++;
         }
+        else ticksCount+=1;
+
     }
 
     @Override
-    public void accept(OccupantVisitor v) {
+    protected void levelUp() {
+        super.levelUp();
+        this.arrowsCount+=(10*this.level);
+        this.attackPoints+=(2*this.level);
+        this.defencePoints+=this.level;
+    }
+
+
+    @Override
+    public void death(Player p) {
 
     }
 }

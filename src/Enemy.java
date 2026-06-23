@@ -1,15 +1,10 @@
 public abstract class Enemy extends Unit {
 
-    protected int experiencee;
+    protected int experienceValue;
 
-
-    protected Enemy(String name, int healthPool, int attackPoints, int defencepoints) {
-        super(name, healthPool, attackPoints, defencepoints);
-
+    public Enemy(String name, int healthPool, int healthAmount, int attackPoints, int defencePoints) {
+        super("e", this.position, name, healthPool, healthAmount, attackPoints, defencePoints);
     }
 
-        @Override
-        public void death() {
-        }
-
+    public abstract void onEnemyTurn();
 }

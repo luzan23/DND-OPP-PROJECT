@@ -1,39 +1,35 @@
-public class Rouge extends Player {
-    private int energyPool;
-    private int energyAmount;
-    private int energyCost;
+public class Rouge extends Player implements HeroicUnit {
 
-    public Rouge(String name, int healthPool, int attackPoints, int defencepoints, int energyCost) {
-        super(name, healthPool, attackPoints, defencepoints);
-        this.energyPool = 100; // מקסימום אנרגיה קבוע של נוכל
-        this.energyAmount = energyPool;
-        this.energyCost = energyCost;
-    }
+    private int cost;
+    private int currentEnergy;
 
-    @Override
-    public void levelUp() {
-        super.levelUp();
-        this.energyAmount = energyPool;
-        // TODO: להוסיף את שאר הבונוסים הייחודיים של הנוכל להתקפה
+    public Rouge(int cost, String name, int healthPool, int healthAmount, int attackPoints, int defensePoints, int abilityCoolDown) {
+        super(name, healthPool, healthAmount, attackPoints, defensePoints);
+        this.cost = cost;
+        this.currentEnergy = 100;
     }
 
     @Override
     public void castAbility() {
-        if (energyAmount < energyCost) {
-            // TODO: לשלוח הודעה שאין מספיק אנרגיה
-            return;
-        }
-        energyAmount -= energyCost;
-        // TODO: לוגיקת תקיפת כל האויבים בטווח 1
+        this.currentEnergy -= cost;
+        //deal damage
     }
 
     @Override
     public void onTick() {
-        energyAmount = Math.min(energyAmount + 10, energyPool);
+        this.currentEnergy = Math.min(this.currentEnergy + 10, 100);
     }
 
     @Override
-    public void accept(OccupantVisitor v) {
+    protected void levelUp() {
+        super.levelUp();
+        this.currentEnergy = 100;
+        this.attackPoints += 3 * this.level;
+    }
+
+
+    @Override
+    public void death(Player p) {
 
     }
 }

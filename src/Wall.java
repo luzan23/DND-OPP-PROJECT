@@ -1,7 +1,7 @@
-public class Wall extends Cell {
+public class Wall extends Cell{
 
-    public Wall(Position position) {
-        super(position);
+    public Wall(Position p, char title) {
+        super(p, title);
     }
 
     @Override
@@ -13,4 +13,5 @@ public class Wall extends Cell {
     public String toString() {
         return "#";
     }
+
 }

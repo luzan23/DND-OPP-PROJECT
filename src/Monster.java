@@ -1,18 +1,24 @@
-public class Monster extends Enemy {
+public class Monster extends Enemy{
+
     protected int visionRange;
 
-    public Monster(String name, char character, int healthPool, int attackPoints, int defencepoints, int visionRange, int experienceValue) {
-        super(name,healthPool, attackPoints,defencepoints);
-        this.visionRange = visionRange;
-    }
-
-    @Override
-    public void onTick() {
-        // TODO: לוגיקת תנועה מבוססת מרחק מהשחקן (אם בטווח הראייה - לרדוף, אחרת לזוז אקראית)
+    public Monster(int vR,String name, int healthPool, int healthAmount, int attackPoints, int defencePoints) {
+        super(name, healthPool, healthAmount, attackPoints, defencePoints);
+        this.visionRange=vR;
     }
 
     @Override
     public void accept(OccupantVisitor v) {
+
+    }
+
+    @Override
+    public void death(Player p) {
+
+    }
+
+    @Override
+    public void onEnemyTurn() {
 
     }
 }

@@ -1,49 +1,54 @@
-public abstract class Unit implements Occupant, CellVisitor, OccupantVisitor {
-    public String name;
-    private int healthPool;
-    private int healthAmount;
-    private int attackPoints;
-    private int defencepoints;
-    protected Position position; // הוספנו את השדה כדי שהיחידה תזכור את המיקום שלה
+public abstract class Unit extends Occupant implements CellVisitor, OccupantVisitor {
+    protected String name;
+    protected int healthPool;
+    protected int healthAmount;
+    protected int attackPoints;
+    protected int defencePoints;
 
-    protected Unit(String name, int healthPool, int attackPoints, int defencepoints) {
+    public Unit (char title, Position pos, String name, int healthPool, int healthAmount, int attackPoints, int defencePoints){
+        super(title, pos);
         this.name = name;
-        this.healthPool = healthPool;
-        this.healthAmount = healthPool;
-        this.attackPoints = attackPoints;
-        this.defencepoints = defencepoints;
+        this.healthPool=healthPool;
+        this.healthAmount=healthAmount;
+        this.attackPoints=attackPoints;
+        this.defencePoints=defencePoints;
     }
+    public abstract void accept(OccupantVisitor v);
+    public abstract void death(Player p);
+    //the player is who killed the enemy, so it's easier to give it the exp points when the enemy dies
 
     public void attack(Unit defender){
-    }
 
+    }
     public int defend(){
-        return 0;
+        throw new UnsupportedOperationException("Not implemented yet!");
     }
 
-    public void death(){
+
+    @Override
+    public void visit(Wall w) {
+        //remains empty bc noting can happen when visiting a wall
     }
 
     @Override
-    public Position getPosition() {
-        return position;
+    public void visit(Enemy e) {
+
     }
 
-    public void setPosition(Position position) {
-        this.position = position;
+    @Override
+    public void visit(Floor f) {
+        Occupant occ = f.getOccupant();
+        if(occ == null){
+            this.setPosition(f.getPosition());
+            f.setOccupant(this);
+        }
+        else {
+            occ.accept(this);
+        }
     }
-    public String getName() {
-        return name;
-    }
-    public abstract void onTick();
 
-    @Override public void visit(Wall w) {}
-    @Override public void visit(Enemy e) {}
-    @Override public void visit(Floor f) {
-        if (f.getOccupant() != null) {
-            f.getOccupant().accept(this);
-        } else {}
+    @Override
+    public void visit(Player p) {
+
     }
-    @Override public void visit(Player p) {}
-    @Override public void setPosition() {}
 }
