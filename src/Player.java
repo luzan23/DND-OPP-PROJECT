@@ -1,3 +1,5 @@
+import java.util.List;
+
 public abstract class Player extends Unit implements HeroicUnit {
     protected int experience;
     protected int level;
@@ -66,5 +68,5 @@ public abstract class Player extends Unit implements HeroicUnit {
     @Override
     public abstract String description();
 
-    public abstract void castAbility();
+    public abstract void castSpecialAbility(List<Enemy> enemies);
 }

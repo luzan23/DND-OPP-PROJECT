@@ -15,11 +15,9 @@ public class Game {
         this.levelsDir = levelsDir;
         this.callback = callback;
         this.currentLevel = 1;
-
-        // propagate callback to player and all units
         player.setCallback(callback);
 
-        // count levels
+        // ספירת רמות
         File dir = new File(levelsDir);
         int count = 0;
         while (new File(dir, "level" + (count + 1) + ".txt").exists()) count++;
@@ -30,12 +28,47 @@ public class Game {
 
     private void loadLevel(int level) throws IOException {
         enemies = new ArrayList<>();
-        Player[] slot = {player};
         String path = levelsDir + File.separator + "level" + level + ".txt";
-        board = new GameBoard(path, enemies, slot);
-        // set callback for all enemies
-        for (Enemy e : enemies) {
-            e.setCallback(callback);
+
+        // קריאת הקובץ
+        List<String> lines = new ArrayList<>();
+        BufferedReader br = new BufferedReader(new FileReader(path));
+        String line = br.readLine();
+        while (line != null) {
+            lines.add(line);
+            line = br.readLine();
+        }
+        br.close();
+
+        // בניית הלוח
+        int rows = lines.size();
+        int cols = lines.get(0).length();
+        board = new GameBoard(rows, cols);
+
+        // מילוי הלוח
+        for (int r = 0; r < rows; r++) {
+            String currentLine = lines.get(r);
+            for (int c = 0; c < currentLine.length(); c++) {
+                char ch = currentLine.charAt(c);
+                Position pos = new Position(r, c);
+                if (ch == '#') {
+                    board.setCell(pos, new Wall(pos));
+                } else {
+                    Floor floor = new Floor(pos);
+                    board.setCell(pos, floor);
+                    if (ch == '@') {
+                        player.setPosition(pos);
+                        floor.setOccupant(player);
+                    } else if (ch != '.') {
+                        Enemy e = EnemyFactory.chooseEnemy(ch, pos);
+                        if (e != null) {
+                            floor.setOccupant(e);
+                            enemies.add(e);
+                            e.setCallback(callback);
+                        }
+                    }
+                }
+            }
         }
     }
 
@@ -47,34 +80,36 @@ public class Game {
         return currentLevel > totalLevels;
     }
 
-    /** Process one player action. Returns true if game continues. */
     public boolean tick(char action) throws IOException {
         if (!player.isAlive()) return false;
 
-        // --- Player turn ---
+        // --- תור השחקן ---
         Position cur = player.getPosition();
-        Position target = switch (action) {
-            case 'w' -> new Position(cur.getX() - 1, cur.getY());
-            case 's' -> new Position(cur.getX() + 1, cur.getY());
-            case 'a' -> new Position(cur.getX(), cur.getY() - 1);
-            case 'd' -> new Position(cur.getX(), cur.getY() + 1);
-            case 'e' -> null; // ability
-            case 'q' -> cur;  // do nothing
-            default  -> cur;
-        };
+        Position target;
+
+        if (action == 'w') {
+            target = new Position(cur.getX() - 1, cur.getY());
+        } else if (action == 's') {
+            target = new Position(cur.getX() + 1, cur.getY());
+        } else if (action == 'a') {
+            target = new Position(cur.getX(), cur.getY() - 1);
+        } else if (action == 'd') {
+            target = new Position(cur.getX(), cur.getY() + 1);
+        } else {
+            target = cur;
+        }
 
         if (action == 'e') {
-            castPlayerAbility();
-        } else if (target != null && !target.equals(cur)) {
+            player.castSpecialAbility(enemies);
+        } else if (!target.equals(cur)) {
             board.moveUnit(player, target);
         }
 
-        // remove dead enemies
         removeDeadEnemies();
 
         if (!player.isAlive()) return false;
 
-        // check level complete
+        // בדיקת סיום רמה
         if (enemies.isEmpty()) {
             currentLevel++;
             if (currentLevel > totalLevels) {
@@ -85,9 +120,10 @@ public class Game {
             return true;
         }
 
-        // --- Enemies turn ---
+        // --- תור האויבים ---
         player.onTick();
-        for (Enemy e : new ArrayList<>(enemies)) {
+        List<Enemy> enemiesCopy = new ArrayList<>(enemies);
+        for (Enemy e : enemiesCopy) {
             if (e.isAlive()) {
                 e.onEnemyTurn(board, player);
             }
@@ -95,20 +131,6 @@ public class Game {
 
         removeDeadEnemies();
         return player.isAlive();
-    }
-
-    private void castPlayerAbility() {
-        if (player instanceof Warrior w) {
-            w.castAbility(enemies);
-        } else if (player instanceof Mage m) {
-            m.castAbility(enemies);
-        } else if (player instanceof Rogue r) {
-            r.castAbility(enemies);
-        } else if (player instanceof Hunter h) {
-            h.castAbility(enemies);
-        } else {
-            player.castAbility();
-        }
     }
 
     private void removeDeadEnemies() {

@@ -1,3 +1,5 @@
+import java.util.List;
+
 public class Boss extends Monster implements HeroicUnit {
     private int abilityFrequency;
     private int combatTicks;
@@ -9,12 +11,9 @@ public class Boss extends Monster implements HeroicUnit {
         this.combatTicks = 0;
     }
 
-    @Override
-    public void castAbility() {
-        // Shoebodybop - handled in onEnemyTurn with player reference
-    }
-
-    public void castAbility(Player player) {
+    // יכולת הBoss היא על השחקן - לא על רשימת אויבים
+    // לכן יש פונקציה פרטית נפרדת
+    private void shoebodybop(Player player) {
         notify(this.name + " used Shoebodybop!");
         boolean playerDied = player.defend(this);
         if (playerDied) {
@@ -22,6 +21,10 @@ public class Boss extends Monster implements HeroicUnit {
             notify(player.getName() + " was defeated!");
         }
     }
+
+    // מממש את HeroicUnit - לא בשימוש עבור Boss
+    @Override
+    public void castSpecialAbility(List<Enemy> enemies) { }
 
     @Override
     public void onEnemyTurn(GameBoard board, Player player) {
@@ -32,11 +35,11 @@ public class Boss extends Monster implements HeroicUnit {
         if (dist < visionRange) {
             if (combatTicks == abilityFrequency) {
                 combatTicks = 0;
-                castAbility(player);
+                shoebodybop(player);
             } else {
                 combatTicks++;
             }
-            // move toward player
+            // זז לכיוון השחקן
             int dx = myPos.getX() - playerPos.getX();
             int dy = myPos.getY() - playerPos.getY();
             Position targetPos;
@@ -54,7 +57,7 @@ public class Boss extends Monster implements HeroicUnit {
             }
         } else {
             combatTicks = 0;
-            // random movement
+            // תנועה אקראית
             int dir = random.nextInt(5);
             Position targetPos = switch (dir) {
                 case 0 -> new Position(myPos.getX() - 1, myPos.getY());

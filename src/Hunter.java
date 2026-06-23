@@ -33,15 +33,9 @@ public class Hunter extends Player {
         this.defencePoints += this.level;
     }
 
-    @Override
-    public void castAbility() {
-        if (arrowsCount <= 0) {
-            notify("No arrows left.");
-            return;
-        }
-    }
 
-    public void castAbility(List<Enemy> enemies) {
+
+    public void castSpecialAbility(List<Enemy> enemies) {
         if (arrowsCount <= 0) {
             notify("No arrows left.");
             return;

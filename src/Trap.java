@@ -15,8 +15,11 @@ public class Trap extends Enemy {
 
     @Override
     public String toString() {
-        return visible ? String.valueOf(title) : ".";
-    }
+        if (visible) {
+            return String.valueOf(title);
+        } else {
+            return ".";
+        }    }
 
     @Override
     public void onEnemyTurn(GameBoard board, Player player) {

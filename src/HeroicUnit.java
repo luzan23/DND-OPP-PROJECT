@@ -1,3 +1,5 @@
+import java.util.List;
+
 public interface HeroicUnit {
-    void castAbility();
+    void castSpecialAbility(List<Enemy> enemies);
 }

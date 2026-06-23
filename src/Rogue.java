@@ -25,7 +25,7 @@ public class Rogue extends Player {
     }
 
     @Override
-    public void castAbility() {
+    public void castSpecialAbility(List<Enemy> enemies) {
         if (currentEnergy < cost) {
             notify("Not enough energy.");
             return;

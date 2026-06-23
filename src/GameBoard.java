@@ -6,41 +6,15 @@ public class GameBoard {
     private int rows;
     private int cols;
 
-    public GameBoard(String filePath, List<Enemy> enemies, Player[] playerSlot) throws IOException {
-        List<String> lines = new ArrayList<>();
-        try (BufferedReader br = new BufferedReader(new FileReader(filePath))) {
-            String line;
-            while ((line = br.readLine()) != null) {
-                lines.add(line);
-            }
-        }
-        rows = lines.size();
-        cols = lines.get(0).length();
-        board = new Cell[rows][cols];
+    public GameBoard(int rows, int cols) {
+        this.rows = rows;
+        this.cols = cols;
+        this.board = new Cell[rows][cols];
+    }
 
-        for (int r = 0; r < rows; r++) {
-            String line = lines.get(r);
-            for (int c = 0; c < line.length(); c++) {
-                char ch = line.charAt(c);
-                Position pos = new Position(r, c);
-                if (ch == '#') {
-                    board[r][c] = new Wall(pos);
-                } else {
-                    Floor floor = new Floor(pos);
-                    board[r][c] = floor;
-                    if (ch == '@') {
-                        playerSlot[0].setPosition(pos);
-                        floor.setOccupant(playerSlot[0]);
-                    } else if (ch != '.') {
-                        Enemy e = EnemyFactory.create(ch, pos);
-                        if (e != null) {
-                            floor.setOccupant(e);
-                            enemies.add(e);
-                        }
-                    }
-                }
-            }
-        }
+
+    public void setCell(Position p, Cell c) {
+        board[p.getX()][p.getY()] = c;
     }
 
     public Cell getCell(Position p) {
@@ -80,13 +54,13 @@ public class GameBoard {
 
     @Override
     public String toString() {
-        StringBuilder sb = new StringBuilder();
+        String result = "";
         for (int r = 0; r < rows; r++) {
             for (int c = 0; c < cols; c++) {
-                sb.append(board[r][c].toString());
+                result = result + board[r][c].toString();
             }
-            sb.append("\n");
+            result = result + "\n";
         }
-        return sb.toString().trim();
+        return result;
     }
 }

@@ -37,16 +37,9 @@ public class Mage extends Player {
         this.spellPower += (10 * this.level);
     }
 
-    @Override
-    public void castAbility() {
-        if (currentMana < manaCost) {
-            notify("Not enough mana.");
-            return;
-        }
-        currentMana -= manaCost;
-    }
 
-    public void castAbility(List<Enemy> enemies) {
+
+    public void castSpecialAbility(List<Enemy> enemies) {
         if (currentMana < manaCost) {
             notify("Not enough mana.");
             return;

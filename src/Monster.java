@@ -7,36 +7,42 @@ public class Monster extends Enemy {
         this.visionRange = visionRange;
     }
 
-    @Override
     public void onEnemyTurn(GameBoard board, Player player) {
         Position myPos = this.getPosition();
         Position playerPos = player.getPosition();
         double dist = myPos.distance(playerPos);
-
         Position targetPos;
+
         if (dist < visionRange) {
-            // chase player
             int dx = myPos.getX() - playerPos.getX();
             int dy = myPos.getY() - playerPos.getY();
+
             if (Math.abs(dx) > Math.abs(dy)) {
-                targetPos = dx > 0
-                        ? new Position(myPos.getX() - 1, myPos.getY())
-                        : new Position(myPos.getX() + 1, myPos.getY());
+                if (dx > 0) {
+                    targetPos = new Position(myPos.getX() - 1, myPos.getY());
+                } else {
+                    targetPos = new Position(myPos.getX() + 1, myPos.getY());
+                }
             } else {
-                targetPos = dy > 0
-                        ? new Position(myPos.getX(), myPos.getY() - 1)
-                        : new Position(myPos.getX(), myPos.getY() + 1);
+                if (dy > 0) {
+                    targetPos = new Position(myPos.getX(), myPos.getY() - 1);
+                } else {
+                    targetPos = new Position(myPos.getX(), myPos.getY() + 1);
+                }
             }
         } else {
-            // random movement
             int dir = random.nextInt(5);
-            targetPos = switch (dir) {
-                case 0 -> new Position(myPos.getX() - 1, myPos.getY()); // left
-                case 1 -> new Position(myPos.getX() + 1, myPos.getY()); // right
-                case 2 -> new Position(myPos.getX(), myPos.getY() - 1); // up
-                case 3 -> new Position(myPos.getX(), myPos.getY() + 1); // down
-                default -> myPos; // stay
-            };
+            if (dir == 0) {
+                targetPos = new Position(myPos.getX() - 1, myPos.getY());
+            } else if (dir == 1) {
+                targetPos = new Position(myPos.getX() + 1, myPos.getY());
+            } else if (dir == 2) {
+                targetPos = new Position(myPos.getX(), myPos.getY() - 1);
+            } else if (dir == 3) {
+                targetPos = new Position(myPos.getX(), myPos.getY() + 1);
+            } else {
+                targetPos = myPos;
+            }
         }
 
         if (!targetPos.equals(myPos)) {

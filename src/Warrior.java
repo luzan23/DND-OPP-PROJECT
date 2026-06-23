@@ -32,21 +32,10 @@ public class Warrior extends Player {
         this.remainingCoolDown = 0;
     }
 
-    @Override
-    public void castAbility() {
-        if (remainingCoolDown > 0) {
-            notify("Ability not ready. Remaining cooldown: " + remainingCoolDown);
-            return;
-        }
-        // healed first
-        int healAmount = 10 * this.defencePoints;
-        int newHealth = Math.min(this.healthAmount + healAmount, this.healthPool);
-        this.healthAmount = newHealth;
-        notify(this.name + " used Avenger's Shield, healing for " + healAmount + ".");
-        remainingCoolDown = abilityCoolDown;
-    }
 
-    public void castAbility(List<Enemy> enemies) {
+
+
+    public void castSpecialAbility(List<Enemy> enemies) {
         if (remainingCoolDown > 0) {
             notify("Ability not ready. Remaining cooldown: " + remainingCoolDown);
             return;
@@ -82,4 +71,6 @@ public class Warrior extends Player {
                 "\t\tExperience: " + experience + "/" + (50 * level) +
                 "\t\tCooldown: " + remainingCoolDown + "/" + abilityCoolDown;
     }
+
+
 }
