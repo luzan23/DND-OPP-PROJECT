@@ -22,13 +22,10 @@ public class Main {
 
         Scanner scanner = new Scanner(System.in);
         GameCallback callback = System.out::println;
-
-        // Show player selection
         System.out.println("Select player:");
         for (int i = 0; i < PLAYERS.size(); i++) {
             System.out.println((i + 1) + ". " + PLAYERS.get(i).description());
         }
-
         int choice = -1;
         while (choice < 1 || choice > PLAYERS.size()) {
             String input = scanner.nextLine().trim();
@@ -38,7 +35,6 @@ public class Main {
                 System.out.println("Please enter a number between 1 and " + PLAYERS.size());
             }
         }
-
         Player selected = PLAYERS.get(choice - 1);
         System.out.println("You have selected:\n" + selected.getName());
 

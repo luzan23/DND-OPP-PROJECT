@@ -16,21 +16,15 @@ public class Game {
         this.callback = callback;
         this.currentLevel = 1;
         player.setCallback(callback);
-
-        // ספירת רמות
         File dir = new File(levelsDir);
         int count = 0;
         while (new File(dir, "level" + (count + 1) + ".txt").exists()) count++;
         this.totalLevels = count;
-
         loadLevel(currentLevel);
     }
-
     private void loadLevel(int level) throws IOException {
         enemies = new ArrayList<>();
         String path = levelsDir + File.separator + "level" + level + ".txt";
-
-        // קריאת הקובץ
         List<String> lines = new ArrayList<>();
         BufferedReader br = new BufferedReader(new FileReader(path));
         String line = br.readLine();
@@ -39,13 +33,9 @@ public class Game {
             line = br.readLine();
         }
         br.close();
-
-        // בניית הלוח
         int rows = lines.size();
         int cols = lines.get(0).length();
         board = new GameBoard(rows, cols);
-
-        // מילוי הלוח
         for (int r = 0; r < rows; r++) {
             String currentLine = lines.get(r);
             for (int c = 0; c < currentLine.length(); c++) {
@@ -82,8 +72,6 @@ public class Game {
 
     public boolean tick(char action) throws IOException {
         if (!player.isAlive()) return false;
-
-        // --- תור השחקן ---
         Position cur = player.getPosition();
         Position target;
 
@@ -98,18 +86,13 @@ public class Game {
         } else {
             target = cur;
         }
-
         if (action == 'e') {
             player.castSpecialAbility(enemies);
         } else if (!target.equals(cur)) {
             board.moveUnit(player, target);
         }
-
         removeDeadEnemies();
-
         if (!player.isAlive()) return false;
-
-        // בדיקת סיום רמה
         if (enemies.isEmpty()) {
             currentLevel++;
             if (currentLevel > totalLevels) {
@@ -119,8 +102,6 @@ public class Game {
             loadLevel(currentLevel);
             return true;
         }
-
-        // --- תור האויבים ---
         player.onTick();
         List<Enemy> enemiesCopy = new ArrayList<>(enemies);
         for (Enemy e : enemiesCopy) {
@@ -128,7 +109,6 @@ public class Game {
                 e.onEnemyTurn(board, player);
             }
         }
-
         removeDeadEnemies();
         return player.isAlive();
     }

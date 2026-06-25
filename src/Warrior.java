@@ -45,7 +45,6 @@ public class Warrior extends Player {
         notify(this.name + " used Avenger's Shield, healing for " + healAmount + ".");
         remainingCoolDown = abilityCoolDown;
 
-        // find enemies within range < 3
         java.util.List<Enemy> inRange = new java.util.ArrayList<>();
         for (Enemy e : enemies) {
             if (e.isAlive() && this.position.distance(e.getPosition()) < 3) {
@@ -64,12 +63,12 @@ public class Warrior extends Player {
 
     @Override
     public String description() {
-        return name + "\t\tHealth: " + healthAmount + "/" + healthPool +
-                "\t\tAttack: " + attackPoints +
-                "\t\tDefense: " + defencePoints +
-                "\t\tLevel: " + level +
-                "\t\tExperience: " + experience + "/" + (50 * level) +
-                "\t\tCooldown: " + remainingCoolDown + "/" + abilityCoolDown;
+        return name + " Health: " + healthAmount + "/" + healthPool +
+                "   Attack: " + attackPoints +
+                "   Defense: " + defencePoints +
+                "   Level: " + level +
+                "   Experience: " + experience + "/" + (50 * level) +
+                "   Cooldown: " + remainingCoolDown + "/" + abilityCoolDown;
     }
 
 

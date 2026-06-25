@@ -16,7 +16,6 @@ public abstract class Cell {
     }
 
     public void setOccupant(Occupant o) {
-        // only Floor supports occupants
     }
 
     public abstract void accept(CellVisitor v);

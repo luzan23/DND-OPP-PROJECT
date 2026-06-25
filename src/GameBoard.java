@@ -21,25 +21,13 @@ public class GameBoard {
         return board[p.getX()][p.getY()];
     }
 
-    public Occupant getOccupant(Position p) {
-        Cell cell = board[p.getX()][p.getY()];
-        return cell.getOccupant();
-    }
-
-    public void setOccupant(Position p, Occupant o) {
-        board[p.getX()][p.getY()].setOccupant(o);
-    }
-
     public void moveUnit(Unit u, Position targetPos) {
         int r = targetPos.getX();
         int c = targetPos.getY();
         if (r < 0 || r >= rows || c < 0 || c >= cols) return;
-
         Position oldPos = u.getPosition();
         Cell targetCell = board[r][c];
         targetCell.accept(u);
-
-        // if position changed (unit moved successfully), clear old cell
         if (!u.getPosition().equals(oldPos)) {
             board[oldPos.getX()][oldPos.getY()].setOccupant(null);
         }

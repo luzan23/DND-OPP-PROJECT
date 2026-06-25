@@ -6,11 +6,10 @@ public abstract class Enemy extends Unit {
         this.experienceValue = experienceValue;
     }
 
-    public int getExperienceValue() { return experienceValue; }
 
     public abstract void onEnemyTurn(GameBoard board, Player player);
 
-    // Enemy moves into Player cell — combat
+
     @Override
     public void visit(Player p) {
         boolean playerDied = p.defend(this);

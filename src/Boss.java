@@ -11,8 +11,6 @@ public class Boss extends Monster implements HeroicUnit {
         this.combatTicks = 0;
     }
 
-    // יכולת הBoss היא על השחקן - לא על רשימת אויבים
-    // לכן יש פונקציה פרטית נפרדת
     private void shoebodybop(Player player) {
         notify(this.name + " used Shoebodybop!");
         boolean playerDied = player.defend(this);
@@ -22,7 +20,6 @@ public class Boss extends Monster implements HeroicUnit {
         }
     }
 
-    // מממש את HeroicUnit - לא בשימוש עבור Boss
     @Override
     public void castSpecialAbility(List<Enemy> enemies) { }
 
@@ -39,7 +36,6 @@ public class Boss extends Monster implements HeroicUnit {
             } else {
                 combatTicks++;
             }
-            // זז לכיוון השחקן
             int dx = myPos.getX() - playerPos.getX();
             int dy = myPos.getY() - playerPos.getY();
             Position targetPos;
@@ -57,7 +53,6 @@ public class Boss extends Monster implements HeroicUnit {
             }
         } else {
             combatTicks = 0;
-            // תנועה אקראית
             int dir = random.nextInt(5);
             Position targetPos = switch (dir) {
                 case 0 -> new Position(myPos.getX() - 1, myPos.getY());

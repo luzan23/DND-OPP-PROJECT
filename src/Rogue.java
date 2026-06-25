@@ -1,6 +1,6 @@
 import java.util.List;
 
-public class Rogue extends Player {
+public class    Rogue extends Player {
     private int cost;
     private int currentEnergy;
 
@@ -53,11 +53,11 @@ public class Rogue extends Player {
 
     @Override
     public String description() {
-        return name + "\t\tHealth: " + healthAmount + "/" + healthPool +
-                "\t\tAttack: " + attackPoints +
-                "\t\tDefense: " + defencePoints +
-                "\t\tLevel: " + level +
-                "\t\tExperience: " + experience + "/" + (50 * level) +
-                "\t\tEnergy: " + currentEnergy + "/100";
+        return name + "     Health: " + healthAmount + "/" + healthPool +
+                "   Attack: " + attackPoints +
+                "   Defense: " + defencePoints +
+                "   Level: " + level +
+                "   Experience: " + experience + "/" + (50 * level) +
+                "   Energy: " + currentEnergy + "/100";
     }
 }
